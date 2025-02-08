@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prix des Cryptos</title>
+    <head><meta name="color-scheme" content="light dark">
+    <meta charset="utf-8"></head>
 </head>
 <body>
-    <h1>Prix des Cryptomonnaies</h1>
-    <pre id="jsonDisplay">Chargement...</pre>
+    <pre id="jsonDisplay"></pre>
 
     <script>
-        // Fonction pour récupérer le prix de chaque crypto
         async function fetchCryptoPrices() {
             const urls = {
                 bitcoin: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
@@ -19,17 +16,14 @@
             };
 
             try {
-                // Récupérer les données de chaque crypto simultanément avec Promise.all
                 const responses = await Promise.all([
                     fetch(urls.bitcoin),
                     fetch(urls.ethereum),
                     fetch(urls.solana)
                 ]);
 
-                // Attendre que toutes les réponses soient converties en JSON
                 const data = await Promise.all(responses.map(response => response.json()));
 
-                // Formater les données dans le schéma JSON personnalisé
                 const formattedData = {
                     bitcoin: {
                         usd: data[0].bitcoin.usd
@@ -42,14 +36,12 @@
                     }
                 };
 
-                // Afficher le JSON formaté
                 document.getElementById('jsonDisplay').textContent = JSON.stringify(formattedData, null, 2);
             } catch (error) {
                 document.getElementById('jsonDisplay').textContent = 'Erreur lors du chargement des données.';
             }
         }
 
-        // Appeler la fonction pour charger les prix
         fetchCryptoPrices();
     </script>
 </body>
