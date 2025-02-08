@@ -1,39 +1,35 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prix du Bitcoin</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        #price {
-            font-size: 2em;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
-    <h1>Prix du Bitcoin en temps réel</h1>
-    <p id="price">Chargement...</p>
+    <h1>Prix actuel du Bitcoin en USD :</h1>
+    <p id="bitcoin-price">Chargement...</p> <!-- L'endroit où le prix sera affiché -->
 
     <script>
-        async function fetchBTCPrice() {
+        // Fonction pour récupérer le prix du Bitcoin
+        async function fetchBitcoinPrice() {
             try {
-                const response = await fetch("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT");
-                const data = await response.json();
-                document.getElementById("price").innerText = `Prix BTC: ${parseFloat(data.price).toFixed(2)} USD`;
+                // Récupère les données depuis l'API CoinGecko
+                let response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                let data = await response.json();
+
+                // Extraire le prix du Bitcoin en USD
+                let price = data.bitcoin.usd;
+
+                // Mettre à jour le contenu de la page avec le prix
+                document.getElementById('bitcoin-price').textContent = `$${price}`;
             } catch (error) {
-                document.getElementById("price").innerText = "Erreur de chargement";
+                console.error('Erreur lors de la récupération du prix:', error);
+                document.getElementById('bitcoin-price').textContent = 'Erreur de chargement';
             }
         }
 
-        fetchBTCPrice();
-        setInterval(fetchBTCPrice, 10000); // Mise à jour toutes les 10 secondes
+        // Appeler la fonction pour récupérer le prix du Bitcoin au chargement de la page
+        fetchBitcoinPrice();
     </script>
 </body>
 </html>
