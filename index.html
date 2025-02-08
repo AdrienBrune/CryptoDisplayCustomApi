@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prix du Bitcoin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #price {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prix du Bitcoin en temps réel</h1>
+    <p id="price">Chargement...</p>
+
+    <script>
+        async function fetchBTCPrice() {
+            try {
+                const response = await fetch("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT");
+                const data = await response.json();
+                document.getElementById("price").innerText = `Prix BTC: ${parseFloat(data.price).toFixed(2)} USD`;
+            } catch (error) {
+                document.getElementById("price").innerText = "Erreur de chargement";
+            }
+        }
+
+        fetchBTCPrice();
+        setInterval(fetchBTCPrice, 10000); // Mise à jour toutes les 10 secondes
+    </script>
+</body>
+</html>
