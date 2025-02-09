@@ -11,8 +11,8 @@
         async function fetchCryptoPrices() {
             const urls = {
                 bitcoin: 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT',
-                ethereum: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
-                solana: 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd'
+                ethereum: 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT',
+                solana: 'https://api.binance.com/api/v3/ticker/price?symbol=SOLUSDT'
             };
 
             const formattedData = {
@@ -46,16 +46,12 @@
 
                 // browse ethereum JSON
                 if (jsonData[1]) {
-                    if (jsonData[1].ethereum) {
-                        formattedData.ethereum.usd = Math.round(jsonData[1].ethereum.usd);
-                    }
+                    formattedData.ethereum.usd = Math.round(jsonData[1].price);
                 }
 
                 // browse solana JSON
                 if (jsonData[2]) {
-                    if (jsonData[2].solana) {
-                        formattedData.solana.usd = Math.round(jsonData[2].solana.usd);
-                    }
+                    formattedData.solana.usd = Math.round(jsonData[2].price);
                 }
                 
             } catch (error) {
