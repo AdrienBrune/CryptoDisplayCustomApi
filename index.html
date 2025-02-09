@@ -41,11 +41,7 @@
 
                 // browse bitcoin JSON
                 if (jsonData[0]) {
-                    if (jsonData[0].bpi) {
-                        if (jsonData[0].bpi.USD) {
-                                formattedData.bitcoin.usd = Math.round(jsonData[0].bpi.USD.rate);
-                        }
-                    }
+                    formattedData.bitcoin.usd = Math.round(jsonData[0].price);
                 }
 
                 // browse ethereum JSON
