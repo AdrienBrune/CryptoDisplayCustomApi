@@ -39,16 +39,27 @@
                     return null;
                 }));
 
-                if (jsonData[0] && jsonData[0].bitcoin) {
-                    formattedData.bitcoin.usd = Math.round(jsonData[0].bitcoin.usd);
+                // browse bitcoin JSON
+                if (jsonData[0]) {
+                    if (jsonData[0].bpi) {
+                        if (jsonData[0].bpi.USD) {
+                                formattedData.bitcoin.usd = Math.round(jsonData[0].bpi.USD.rate);
+                        }
+                    }
                 }
 
-                if (jsonData[1] && jsonData[1].ethereum) {
-                    formattedData.ethereum.usd = Math.round(jsonData[1].ethereum.usd);
+                // browse ethereum JSON
+                if (jsonData[1]) {
+                    if (jsonData[1].ethereum) {
+                        formattedData.ethereum.usd = Math.round(jsonData[1].ethereum.usd);
+                    }
                 }
 
-                if (jsonData[2] && jsonData[2].solana) {
-                    formattedData.solana.usd = Math.round(jsonData[2].solana.usd);
+                // browse solana JSON
+                if (jsonData[2]) {
+                    if (jsonData[2].solana) {
+                        formattedData.solana.usd = Math.round(jsonData[2].solana.usd);
+                    }
                 }
                 
             } catch (error) {
