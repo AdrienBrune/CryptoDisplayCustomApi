@@ -10,7 +10,7 @@
     <script>
         async function fetchCryptoPrices() {
             const urls = {
-                bitcoin: 'https://cors-anywhere.herokuapp.com/https://api.coindesk.com/v1/bpi/currentprice/BTC.json',
+                bitcoin: 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT',
                 ethereum: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
                 solana: 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd'
             };
