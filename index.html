@@ -10,6 +10,7 @@
     <script>
         async function fetchCryptoPrices() {
             const urls = {
+                // Set the fonctionnal API here !!
                 bitcoin: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
                 ethereum: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
                 solana: 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd'
@@ -26,13 +27,13 @@
 
                 const formattedData = {
                     bitcoin: {
-                        usd: data[0].bitcoin.usd
+                        usd: Math.round(data[0].bitcoin.usd)
                     },
                     ethereum: {
-                        usd: data[1].ethereum.usd
+                        usd: Math.round(data[1].ethereum.usd)
                     },
                     solana: {
-                        usd: data[2].solana.usd
+                        usd: Math.round(data[2].solana.usd)
                     }
                 };
 
