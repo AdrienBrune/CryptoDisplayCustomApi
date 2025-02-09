@@ -10,37 +10,52 @@
     <script>
         async function fetchCryptoPrices() {
             const urls = {
-                // Set the fonctionnal API here !!
                 bitcoin: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
                 ethereum: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
                 solana: 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd'
             };
 
+            const formattedData = {
+                bitcoin: { usd: "error" },
+                ethereum: { usd: "error" },
+                solana: { usd: "error" }
+            };
+
             try {
-                const responses = await Promise.all([
+                const responses = await Promise.allSettled([
                     fetch(urls.bitcoin),
                     fetch(urls.ethereum),
                     fetch(urls.solana)
                 ]);
 
-                const data = await Promise.all(responses.map(response => response.json()));
-
-                const formattedData = {
-                    bitcoin: {
-                        usd: Math.round(data[0].bitcoin.usd)
-                    },
-                    ethereum: {
-                        usd: Math.round(data[1].ethereum.usd)
-                    },
-                    solana: {
-                        usd: Math.round(data[2].solana.usd)
+                const jsonData = await Promise.all(responses.map(async (response, index) => {
+                    if (response.status === "fulfilled" && response.value.ok) {
+                        try {
+                            return await response.value.json();
+                        } catch (err) {
+                            return null;
+                        }
                     }
-                };
+                    return null;
+                }));
 
-                document.getElementById('jsonDisplay').textContent = JSON.stringify(formattedData, null, 2);
+                if (jsonData[0] && jsonData[0].bitcoin) {
+                    formattedData.bitcoin.usd = Math.round(jsonData[0].bitcoin.usd);
+                }
+
+                if (jsonData[1] && jsonData[1].ethereum) {
+                    formattedData.ethereum.usd = Math.round(jsonData[1].ethereum.usd);
+                }
+
+                if (jsonData[2] && jsonData[2].solana) {
+                    formattedData.solana.usd = Math.round(jsonData[2].solana.usd);
+                }
+                
             } catch (error) {
-                document.getElementById('jsonDisplay').textContent = 'Erreur lors du chargement des données.';
+                console.error("Global error:", error);
             }
+
+            document.getElementById('jsonDisplay').textContent = JSON.stringify(formattedData, null, 2);
         }
 
         fetchCryptoPrices();
