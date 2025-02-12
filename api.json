@@ -1,0 +1,29 @@
+{
+    "bitcoin": {
+        "host": "api.coingecko.com",
+        "get": "/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+        "path": [
+            "bitcoin",
+            "usd"
+        ],
+        "priority": 1
+    },
+    "ethereum": {
+        "host": "api.coingecko.com",
+        "get": "/api/v3/simple/price?ids=ethereum&vs_currencies=usd",
+        "path": [
+            "ethereum",
+            "usd"
+        ],
+        "priority": 1
+    },
+    "solana": {
+        "host": "api.coingecko.com",
+        "get": "/api/v3/simple/price?ids=solana&vs_currencies=usd",
+        "path": [
+            "solana",
+            "usd"
+        ],
+        "priority": 0
+    }
+}
